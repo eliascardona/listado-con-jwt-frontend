@@ -11,11 +11,16 @@ import { getHtmlFieldType } from '~/lib/various/form-retrieving/utils';
 import { GenericFieldError } from './ui/generic-field-error';
 import { GenericLabel } from './ui/generic-label';
 
+interface FormFieldProps {
+  formId: string;
+  fieldConfig: FieldConfig;
+}
+
 function generateZodSchema() {
   return z.string().min(2);
 }
 
-export const FormField = ({ fieldConfig }: { fieldConfig: FieldConfig }) => {
+export const FormField = ({ formId, fieldConfig }: FormFieldProps) => {
   const { name: fieldName, label: fieldLabel, type: fieldType } = fieldConfig;
 
   const fieldSchema = generateZodSchema();

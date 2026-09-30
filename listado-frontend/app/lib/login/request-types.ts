@@ -5,7 +5,7 @@ import { zod_string } from '../shared/types';
   Login command
 */
 const LoginCommandSchema = z.object({
-  dn: zod_string,
+  username: zod_string,
   password: zod_string,
 });
 export type LoginCommand = z.infer<typeof LoginCommandSchema>;

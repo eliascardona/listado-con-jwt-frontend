@@ -1,40 +1,48 @@
-import { data, useActionData } from 'react-router';
-import { MainViewLogin } from '~/components/auth/login/main-view';
-import { performLogin } from '~/lib/infrastructure/auth/api';
-import type { Route } from './+types/management-table._index';
+import { data } from "react-router";
+import { MainViewLogin } from "~/components/auth/login/main-view";
+import { performLoginWithKeycloak } from "~/lib/infrastructure/auth/api";
+import type { Route } from "./+types/login";
+import { accessTokenCookie } from "~/lib/infrastructure/auth/utils";
 
 export function meta(args: Route.MetaArgs) {
   return [
-    { title: 'Online Products Selling App' },
+    { title: "Online Products Selling App" },
     {
-      name: 'description',
-      content: 'Coloca una descripción útil para las búsquedas de Google',
+      name: "description",
+      content: "Coloca una descripción útil para las búsquedas de Google",
     },
   ];
 }
 
 export async function action(args: Route.ActionArgs) {
   const formData = await args.request.json();
-  const context = args.context;
+  if (!formData) throw new Error("Error in request body");
 
-  if (!formData) throw new Error('Error in request body');
-
-  const authResponse = await performLogin(formData);
+  const authResponse = await performLoginWithKeycloak(formData);
 
   if (authResponse) {
-    return data({
-      success: true,
-      message: 'Thanks, we have recieved your submission',
-    });
+    return data(
+      {
+        success: true,
+        message: "Thanks, we have recieved your submission",
+        response: authResponse,
+      },
+      {
+        headers: {
+          "Set-Cookie": await accessTokenCookie.serialize(
+            authResponse.access_token,
+          ),
+        },
+      },
+    );
   }
   return data({
     success: false,
-    message: 'We got an internal error',
+    message: "We got an internal error",
+    response: null,
   });
 }
 
 export default function LoginRoute() {
-  const actionData = useActionData<typeof action>();
-
-  return <MainViewLogin actionData={actionData} />;
+  return <MainViewLogin />;
 }

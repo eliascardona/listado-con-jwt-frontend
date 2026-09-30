@@ -6,6 +6,8 @@ interface BooksProps {
 }
 
 export function BookList({ books }: BooksProps) {
+    if (books.length < 1) return <>no hay libros</>
+
     return (
         <>
             {books.map((book) => (

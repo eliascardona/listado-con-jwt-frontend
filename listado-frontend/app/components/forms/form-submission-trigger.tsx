@@ -2,6 +2,7 @@ import { Button } from '~/components/ui/button';
 import { cn } from '~/lib/utils';
 import type { FieldConfig } from '~/lib/various/form-retrieving/types';
 import { FormField } from './fields/form-field';
+import { useFormContext } from 'react-hook-form';
 
 interface FormProps {
   fieldArray: FieldConfig[];
@@ -26,9 +27,11 @@ export function FormTrigger({
   onSubmit,
   disabled,
 }: FormProps) {
+  const { handleSubmit } = useFormContext();
+
   return (
     <div className={cn('w-full', containerClassName)}>
-      <form onSubmit={onSubmit} id={formId} className={className}>
+      <form onSubmit={handleSubmit(onSubmit)} id={formId} className={className}>
         <div className="grid gap-4">
           <fieldset className="grid gap-4" disabled={disabled}>
             {children}
@@ -36,7 +39,7 @@ export function FormTrigger({
               .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
               .map((field, idx) => (
                 <div key={field.name || idx}>
-                  <FormField fieldConfig={field} />
+                  <FormField formId={formId} fieldConfig={field} />
                 </div>
               ))}
           </fieldset>
