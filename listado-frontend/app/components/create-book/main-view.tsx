@@ -5,7 +5,7 @@ import {
 } from "~/lib/various/form-retrieving/types";
 import { FormTrigger } from "../forms/form-submission-trigger";
 import { useActionData, useSubmit } from "react-router";
-import { triggerSaveMessage } from "~/lib/various/form-submission/chat/action-triggers";
+import { triggerBookCreation } from "~/lib/various/form-submission/chat/action-triggers";
 import type { action } from "~/routes/create-book";
 import type { CreatedBookDto } from "~/lib/book/response-types";
 import { toast } from "sonner";
@@ -46,7 +46,7 @@ export function MainViewBookCreation() {
       description: data.description,
     };
 
-    triggerSaveMessage(createBookCommand, submit);
+    triggerBookCreation(createBookCommand, submit);
   }
 
   return (
