@@ -7,9 +7,9 @@ spring:
 
   datasource:
     # Overall Connection Properties
-    url: ${DATASOURCE_URL}
-    username: ${DATASOURCE_USERNAME}
-    password: ${DATASOURCE_PASSWORD}
+    url: ${DATASOURCE_URL:jdbc:postgresql://localhost:5435/escuela}
+    username: ${DATASOURCE_USERNAME:eliascardona}
+    password: ${DATASOURCE_PASSWORD:elias123}
     driver-class-name: ${DATASOURCE_DRIVER_CLASS_NAME:org.postgresql.Driver}
 
     hikari:

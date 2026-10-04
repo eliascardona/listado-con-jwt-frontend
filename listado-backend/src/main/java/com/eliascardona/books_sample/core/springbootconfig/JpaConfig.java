@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories(basePackages = "com.eliascardona.chat_spring_boot")
-@EntityScan(basePackages = "com.eliascardona.chat_spring_boot")
+@EnableJpaRepositories(basePackages = "com.eliascardona.books_sample")
+@EntityScan(basePackages = "com.eliascardona.books_sample")
 @EnableJpaAuditing
 public class JpaConfig {}

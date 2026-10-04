@@ -3,9 +3,10 @@ package com.eliascardona.books_sample.api.repository;
 import com.eliascardona.books_sample.api.entity.Book;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
 
-public interface BookRepository
-        extends JpaRepository<Book, UUID>, JpaSpecificationExecutor<Book> {
+@Repository
+public interface BookRepository extends JpaRepository<Book, UUID>, JpaSpecificationExecutor<Book> {
 }
