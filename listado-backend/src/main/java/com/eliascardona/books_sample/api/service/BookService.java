@@ -24,10 +24,10 @@ public class BookService {
         CreateBookCommand command
     ) {
         Book newBook = new Book();
-        newBook.setId(UUID.randomUUID());
         newBook.setTitle(command.title());
         newBook.setDescription(command.description());
-        Book createdBook = bookRepository.save(newBook);
+
+        Book createdBook = bookRepository.saveAndFlush(newBook);
 
         return new BookCreatedDto(createdBook.getId());
     }
