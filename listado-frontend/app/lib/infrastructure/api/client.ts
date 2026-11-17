@@ -15,13 +15,13 @@ export type ApiError = {
 type AuthTokenProvider = () => Promise<string | null>;
 
 let API_BASE_URL = 'http://localhost:8082/api/';
-let COMPOSE_BASE_URL = 'http://backend:8082/api/';
+// let COMPOSE_BASE_URL = 'http://localhost:8082/api/';
 
-if (typeof window !== 'undefined') {
-  API_BASE_URL = import.meta.env.VITE_API_URL ?? API_BASE_URL;
-} else {
-  API_BASE_URL = process.env.SERVER_API_URL ?? COMPOSE_BASE_URL;
-}
+// if (typeof window !== 'undefined') {
+//   API_BASE_URL = import.meta.env.VITE_API_URL ?? API_BASE_URL;
+// } else {
+//   API_BASE_URL = process.env.SERVER_API_URL ?? COMPOSE_BASE_URL;
+// }
 
 // Improved parameter handling types
 export type QueryParams = Record<
@@ -99,7 +99,8 @@ const serializeParams = (
  * @param authProvider - Optional function that returns a promise resolving to an auth token
  */
 export const createApiClient = (
-  authProvider?: AuthTokenProvider
+  withToken?: boolean,
+  token?: string | null
 ): ApiClient => {
   /**
    * Helper function to build fetch options
@@ -114,10 +115,11 @@ export const createApiClient = (
       ...customHeaders,
     };
 
-    if (authProvider) {
+    if (withToken) {
       try {
-        const token = await authProvider();
         if (token) {
+          console.log('Access token is', token);
+
           headers['Authorization'] = `Bearer ${token}`;
         }
       } catch (error) {
@@ -288,8 +290,8 @@ export const createApiClient = (
 /**
  * Create a client with a specific token (useful for server-side without request object)
  */
-export const createTokenClient = (token: string | null): ApiClient => {
-  return createApiClient(() => Promise.resolve(token));
+export const createClientWithToken = (token: string | null): ApiClient => {
+  return createApiClient(true, token);
 };
 
 // Default client with no authentication for simple requests

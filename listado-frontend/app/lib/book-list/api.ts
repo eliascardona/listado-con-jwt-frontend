@@ -6,13 +6,13 @@ import type {
 } from './response-types';
 
 export async function createBook(
-  command: CreateBookCommand,
+  body: CreateBookCommand,
   client: ApiClient
 ): Promise<CreatedBookDto> {
   try {
     const response = await client.post<CreatedBookDto>(
       `/books/create`,
-      command
+      body
     );
     console.log('[API] - Book creation:', response);
 

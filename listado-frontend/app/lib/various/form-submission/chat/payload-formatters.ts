@@ -2,7 +2,7 @@ import {
   BookCreationEnum,
   type CreateBookCommand,
   type CreateBookRequestBody,
-} from '~/lib/book/request-types';
+} from '~/lib/book-list/request-types';
 
 export function formatDataIntoSaveMessageRequest(command: CreateBookCommand) {
   const format: CreateBookRequestBody = {

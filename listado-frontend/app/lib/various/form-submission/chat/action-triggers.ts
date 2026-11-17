@@ -1,4 +1,4 @@
-import type { CreateBookCommand } from '~/lib/book/request-types';
+import type { CreateBookCommand } from '~/lib/book-list/request-types';
 import {
   useSubmitFromReactRouter,
   type BaseUseFormSubmitOptions,
